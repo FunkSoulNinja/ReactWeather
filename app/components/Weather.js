@@ -2,19 +2,21 @@ import React from 'react';
 import WeatherForm from './WeatherForm';
 import WeatherMessage from './WeatherMessage';
 import { getTemp } from '../api/openWeatherMap';
+import ErrorModal from './ErrorModal';
 
 const Weather = React.createClass({
     getInitialState: function () {
         return {
             location: '',
             temp: '',
-            isLoading: false
+            isLoading: false,
+            error: ''
         };
     },
     handleSearch: function (location) {
         const that = this;
 
-        this.setState({ isLoading: true });
+        this.setState({ isLoading: true, error: '' });
 
         getTemp(location).then(function (temp) {
             that.setState({
@@ -22,27 +24,33 @@ const Weather = React.createClass({
                 temp,
                 isLoading: false
             });
-        }, function (errorMessage) {
-            console.log(errorMessage);
-            that.setState({ isLoading: false });
+        }, function (e) {
+            that.setState({ isLoading: false, error: e.message });
         });
     },
     render: function () {
-        const { location, temp, isLoading } = this.state;
+        const { location, temp, isLoading, error } = this.state;
 
         function renderMessage() {
             if (isLoading) {
-                return <h3>Fetching weather...</h3>;
+                return <h1 className="text-center">Fetching weather...</h1>;
             } else if (temp && location) {
                 return <WeatherMessage location={location} temp={temp} />;
             }
         }
 
+        function renderError() {
+            if (error) {
+                return <ErrorModal message={error}/>;
+            }
+        }
+
         return (
             <div>
-                <h3>Weather component</h3>
+                <h1 className="text-center page-title">Get Weather</h1>
                 <WeatherForm onSearch={this.handleSearch} />
                 {renderMessage()}
+                {renderError()}
             </div>
         );
     }

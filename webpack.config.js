@@ -23,7 +23,8 @@ module.exports = {
         root: __dirname,
         alias: {
             Main: 'app/components/Main.js',
-            Nav: 'app/components/Nav.js'
+            Nav: 'app/components/Nav.js',
+            applicationStyles: 'app/styles/app.css'
         },
         extentions: ['', '.js', '.jsx'],
     },

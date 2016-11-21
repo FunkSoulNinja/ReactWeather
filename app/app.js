@@ -9,6 +9,7 @@ import Examples from './components/Examples';
 
 // Load Foundation
 require('style!css!foundation-sites/dist/foundation.min.css');
+require('style!css!applicationStyles');
 $(document).foundation();
 
 ReactDOM.render(
