@@ -15,7 +15,7 @@ const Nav = React.createClass({
     render: function () {
         return (
             <div className="top-bar">
-                <div className="top-bar">
+                <div className="top-bar-left">
                     <ul className="menu">
                         <li className="menu-text">React Weather App</li>
                         <li>
