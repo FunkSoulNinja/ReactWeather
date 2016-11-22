@@ -13,10 +13,26 @@ const Weather = React.createClass({
             error: ''
         };
     },
+    componentDidMount: function () {
+        const location = this.props.location.query.location;
+
+        if (location && location.length > 0) {
+            this.handleSearch(location);
+            window.location.hash = '#/';
+        }
+    },
+    componentWillReceiveProps: function (newProps) {
+        const location = newProps.location.query.location;
+
+        if (location && location.length > 0) {
+            this.handleSearch(location);
+            window.location.hash = '#/';
+        }
+    },
     handleSearch: function (location) {
         const that = this;
 
-        this.setState({ isLoading: true, error: '' });
+        this.setState({ isLoading: true, error: '', location: '', temp: '' });
 
         getTemp(location).then(function (temp) {
             that.setState({
@@ -41,7 +57,7 @@ const Weather = React.createClass({
 
         function renderError() {
             if (error) {
-                return <ErrorModal message={error}/>;
+                return <ErrorModal message={error} />;
             }
         }
 
